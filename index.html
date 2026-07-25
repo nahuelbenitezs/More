@@ -101,20 +101,20 @@
       position: absolute; bottom: 10px; left: 50%;
       transform: translateX(-50%) translateY(10px) scale(0.9);
       width: 320px;
-      background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border-radius: 16px; padding: 22px 18px; box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+      background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-radius: 16px; padding: 18px 16px; box-shadow: 0 15px 30px rgba(0,0,0,0.25);
       z-index: 2; opacity: 0; pointer-events: none;
       transition: all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
       border: 1px solid rgba(255,255,255,0.6);
       display: flex; flex-direction: column; align-items: center;
     }
 
-    .letter-header { display: flex; justify-content: center; gap: 10px; margin-bottom: 5px; }
-    .float-icon { font-size: 1.4rem; animation: gentleFloat 3s infinite ease-in-out; }
-    .float-icon.heart { animation-delay: 1.5s; font-size: 1.1rem; }
-    @keyframes gentleFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+    .letter-header { display: flex; justify-content: center; gap: 8px; margin-bottom: 2px; }
+    .float-icon { font-size: 1.2rem; animation: gentleFloat 3s infinite ease-in-out; }
+    .float-icon.heart { animation-delay: 1.5s; font-size: 1rem; }
+    @keyframes gentleFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 
-    .letter-title { font-family: 'Dancing Script', cursive; color: #b71c1c; font-size: 2.3rem; text-align: center; margin-bottom: 12px; }
+    .letter-title { font-family: 'Dancing Script', cursive; color: #b71c1c; font-size: 2rem; text-align: center; margin-bottom: 8px; }
 
     /* --- Sistema de Páginas Limpio y Natural --- */
     .letter-content-box {
@@ -138,36 +138,36 @@
     }
 
     .letter-paragraph {
-      color: #333; font-size: 0.9rem; line-height: 1.55; font-weight: 500;
-      text-align: center; margin-bottom: 15px;
+      color: #333; font-size: 0.85rem; line-height: 1.45; font-weight: 500;
+      text-align: center; margin-bottom: 12px;
     }
 
     .giant-question {
       font-family: 'Playfair Display', serif; font-style: italic; color: #880e4f;
-      font-size: 1.5rem; font-weight: 600; text-align: center; margin: 10px 0 15px 0;
+      font-size: 1.35rem; font-weight: 600; text-align: center; margin: 8px 0 12px 0;
     }
 
     /* --- Botones --- */
     .btn-next {
       background: linear-gradient(135deg, #ff4081, #ff79b0); border: none; color: white;
-      font-weight: 600; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;
-      cursor: pointer; padding: 10px 22px; border-radius: 20px;
+      font-weight: 600; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;
+      cursor: pointer; padding: 8px 20px; border-radius: 20px;
       box-shadow: 0 4px 12px rgba(255, 64, 129, 0.3);
-      margin-top: 5px; transition: transform 0.2s ease;
+      margin-top: 2px; transition: transform 0.2s ease;
     }
     .btn-next:active { transform: scale(0.95); }
 
-    .buttons { display: flex; gap: 12px; justify-content: center; margin-top: 5px; width: 100%; }
+    .buttons { display: flex; gap: 10px; justify-content: center; margin-top: 2px; width: 100%; }
 
-    .btn { border: none; padding: 12px 22px; border-radius: 25px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: transform 0.2s ease; }
+    .btn { border: none; padding: 10px 20px; border-radius: 25px; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: transform 0.2s ease; }
     .btn:active { transform: scale(0.9); }
     .btn-yes { background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); color: white; box-shadow: 0 6px 18px rgba(255, 8, 68, 0.4); }
     .btn-no { background: #e0e0e0; color: #616161; }
 
-    /* --- ESTADOS DE ANIMACIÓN AL ABRIR --- */
+    /* --- ESTADOS DE ANIMACIÓN AL ABRIR (Altura ajustada para móvil) --- */
     .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
     .envelope-wrapper.open .letter { 
-      transform: translateX(-50%) translateY(-170px) scale(1); 
+      transform: translateX(-50%) translateY(-135px) scale(1); 
       z-index: 15; opacity: 1; pointer-events: auto;
       box-shadow: 0 25px 50px rgba(0,0,0,0.4); 
     }
@@ -383,16 +383,16 @@
         document.getElementById('mainContainer').classList.add('climax-active');
         
         const letter = document.querySelector('.letter');
-        letter.style.transform = "translateX(-50%) translateY(-170px) scale(1) rotate(1deg)";
-        setTimeout(() => { letter.style.transform = "translateX(-50%) translateY(-170px) scale(1) rotate(-1deg)"; }, 100);
-        setTimeout(() => { letter.style.transform = "translateX(-50%) translateY(-170px) scale(1) rotate(0deg)"; }, 200);
+        letter.style.transform = "translateX(-50%) translateY(-135px) scale(1) rotate(1deg)";
+        setTimeout(() => { letter.style.transform = "translateX(-50%) translateY(-135px) scale(1) rotate(-1deg)"; }, 100);
+        setTimeout(() => { letter.style.transform = "translateX(-50%) translateY(-135px) scale(1) rotate(0deg)"; }, 200);
 
         setTimeout(() => {
           document.getElementById('page3').innerHTML = `
-            <h2 style="font-family: 'Dancing Script', cursive; color: #b71c1c; font-size: 2.2rem; margin-top:10px; text-align:center;">
+            <h2 style="font-family: 'Dancing Script', cursive; color: #b71c1c; font-size: 2rem; margin-top:8px; text-align:center;">
               ¡Sabía que dirías que sí! 💖
             </h2>
-            <p style="text-align:center; margin-top: 15px; color:#333; font-size: 0.95rem;">Sos lo mejor de mi vida, Flor.<br>Preparemos el sushi para festejar 🍣</p>
+            <p style="text-align:center; margin-top: 10px; color:#333; font-size: 0.85rem;">Sos lo mejor de mi vida, Flor.<br>Preparemos el sushi para festejar 🍣</p>
           `;
         }, 400);
 
