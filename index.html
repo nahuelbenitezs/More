@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Flor 💖</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,400&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      overflow: hidden;
+      font-family: 'Montserrat', sans-serif;
+      background: #0a0208;
+      overscroll-behavior-y: none;
+    }
+
+    /* --- Preloader con Neón --- */
+    .preloader {
+      position: fixed; width: 100vw; height: 100dvh; background: #0f020c;
+      display: flex; justify-content: center; align-items: center;
+      z-index: 9999; transition: opacity 0.8s ease, visibility 0.8s;
+    }
+    .glowing-heart { font-size: 4rem; animation: heartBeat 1.2s infinite ease-in-out; filter: drop-shadow(0 0 20px rgba(255, 42, 109, 0.6)); }
+    .loader-text { color: #ffb3c6; font-family: 'Dancing Script', cursive; font-size: 2.2rem; margin-top: 15px; text-align: center; }
+    .loading-bar-container { width: 200px; height: 4px; background: rgba(255,255,255,0.1); margin: 20px auto 0; border-radius: 10px; overflow: hidden; }
+    .loading-bar { width: 0%; height: 100%; background: linear-gradient(90deg, transparent, #ff2a6d, #ff7eb3); animation: loadLine 2s ease-out forwards; }
+
+    @keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+    @keyframes loadLine { to { width: 100%; } }
+
+    /* --- Contenedor Principal y Clímax Atmosférico --- */
+    .landing-container {
+      min-height: 100dvh;
+      background: radial-gradient(circle at 50% 50%, #2a0b1a 0%, #0a0208 100%);
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      perspective: 1200px; position: relative; width: 100vw; overflow: hidden;
+      transition: background 2.5s ease-in-out; 
+    }
+
+    .landing-container.climax-active {
+      background: radial-gradient(circle at 50% 50%, #ffc3a0 0%, #ffafbd 50%, #ff9a9e 100%);
+    }
+    .landing-container.climax-active .ambient-glow {
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 60%);
+    }
+
+    .ambient-glow {
+      position: absolute; width: 80vw; height: 80vw;
+      background: radial-gradient(circle, rgba(255, 42, 109, 0.15) 0%, transparent 60%);
+      border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      pointer-events: none; transition: background 2.5s ease;
+    }
+
+    .sushi-bg { position: absolute; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+    .floating-item { position: absolute; bottom: -80px; font-size: 2.2rem; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3)); animation: floatUpAndSway linear infinite; }
+    @keyframes floatUpAndSway { 0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; } 10%, 90% { opacity: 0.8; } 100% { transform: translateY(-110dvh) translateX(30px) rotate(360deg); opacity: 0; } }
+
+    /* --- Escenario 3D para Móvil --- */
+    .stage { transform-style: preserve-3d; z-index: 10; width: 100%; display: flex; justify-content: center; }
+
+    .envelope-wrapper {
+      position: relative; width: 340px; height: 230px;
+      transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .envelope {
+      position: relative; width: 100%; height: 100%;
+      background: linear-gradient(135deg, #d83054, #ba1a40); border-radius: 0 0 16px 16px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.4), inset 0 0 15px rgba(0,0,0,0.1);
+      transform-style: preserve-3d;
+    }
+
+    .flap {
+      position: absolute; top: 0; left: 0; width: 0; height: 0;
+      border-left: 170px solid transparent; border-right: 170px solid transparent;
+      border-top: 135px solid #f04d71; transform-origin: top;
+      transition: transform 0.7s cubic-bezier(0.6, -0.2, 0.7, 0.05); z-index: 5;
+      filter: drop-shadow(0 5px 8px rgba(0,0,0,0.25));
+    }
+
+    .wax-seal {
+      position: absolute; top: -130px; left: -32px; width: 64px; height: 64px;
+      background: radial-gradient(circle at 30% 30%, #ffd54f 0%, #b08d00 100%);
+      border-radius: 50%; display: flex; justify-content: center; align-items: center;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.4);
+      border: 2px solid #8c6e00;
+    }
+    .seal-letter { font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #3e2700; z-index: 2; }
+
+    .pocket {
+      position: absolute; bottom: 0; left: 0; width: 0; height: 0;
+      border-left: 170px solid #ff6584; border-right: 170px solid #ff6584;
+      border-bottom: 120px solid #e03e63; border-top: 120px solid transparent;
+      border-radius: 0 0 16px 16px; z-index: 4;
+    }
+
+    /* --- La Carta (Glassmorphism & Centrado Perfecto) --- */
+    .letter {
+      position: absolute; bottom: 10px; left: 50%;
+      transform: translateX(-50%) translateY(10px) scale(0.9);
+      width: 320px;
+      background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-radius: 16px; padding: 22px 18px; box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+      z-index: 2; opacity: 0; pointer-events: none;
+      transition: all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+      border: 1px solid rgba(255,255,255,0.6);
+      display: flex; flex-direction: column; align-items: center;
+    }
+
+    .letter-header { display: flex; justify-content: center; gap: 10px; margin-bottom: 5px; }
+    .float-icon { font-size: 1.4rem; animation: gentleFloat 3s infinite ease-in-out; }
+    .float-icon.heart { animation-delay: 1.5s; font-size: 1.1rem; }
+    @keyframes gentleFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
+    .letter-title { font-family: 'Dancing Script', cursive; color: #b71c1c; font-size: 2.3rem; text-align: center; margin-bottom: 12px; }
+
+    /* --- Sistema de Páginas Limpio y Natural --- */
+    .letter-content-box {
+      width: 100%;
+      position: relative;
+    }
+
+    .page {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .page.active {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .letter-paragraph {
+      color: #333; font-size: 0.9rem; line-height: 1.55; font-weight: 500;
+      text-align: center; margin-bottom: 15px;
+    }
+
+    .giant-question {
+      font-family: 'Playfair Display', serif; font-style: italic; color: #880e4f;
+      font-size: 1.5rem; font-weight: 600; text-align: center; margin: 10px 0 15px 0;
+    }
+
+    /* --- Botones --- */
+    .btn-next {
+      background: linear-gradient(135deg, #ff4081, #ff79b0); border: none; color: white;
+      font-weight: 600; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;
+      cursor: pointer; padding: 10px 22px; border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(255, 64, 129, 0.3);
+      margin-top: 5px; transition: transform 0.2s ease;
+    }
+    .btn-next:active { transform: scale(0.95); }
+
+    .buttons { display: flex; gap: 12px; justify-content: center; margin-top: 5px; width: 100%; }
+
+    .btn { border: none; padding: 12px 22px; border-radius: 25px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: transform 0.2s ease; }
+    .btn:active { transform: scale(0.9); }
+    .btn-yes { background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); color: white; box-shadow: 0 6px 18px rgba(255, 8, 68, 0.4); }
+    .btn-no { background: #e0e0e0; color: #616161; }
+
+    /* --- ESTADOS DE ANIMACIÓN AL ABRIR --- */
+    .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
+    .envelope-wrapper.open .letter { 
+      transform: translateX(-50%) translateY(-170px) scale(1); 
+      z-index: 15; opacity: 1; pointer-events: auto;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.4); 
+    }
+
+    .tap-hint { position: absolute; bottom: 8vh; color: #fff; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; animation: pulseFade 2s infinite; z-index: 10; }
+    @keyframes pulseFade { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+  </style>
+</head>
+<body>
+
+  <!-- Pantalla de carga animada -->
+  <div id="preloader" class="preloader">
+    <div class="loader-content">
+      <div class="glowing-heart">💖</div>
+      <p class="loader-text">Conectando corazones...</p>
+      <div class="loading-bar-container">
+        <div class="loading-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="landing-container" id="mainContainer">
+    <!-- Fondo dinámico -->
+    <div class="sushi-bg" id="sushiBg"></div>
+    <div class="ambient-glow" id="ambientGlow"></div>
+
+    <!-- Escenario 3D interactivo -->
+    <div class="stage" id="stage">
+      <div class="envelope-wrapper" id="envelopeWrapper">
+        <div class="envelope">
+          
+          <div class="flap">
+            <div class="wax-seal">
+              <span class="seal-letter">F</span>
+            </div>
+          </div>
+          
+          <div class="pocket"></div>
+          
+          <div class="letter">
+            <div class="letter-header">
+              <span class="float-icon">🍣</span>
+              <span class="float-icon heart">💖</span>
+              <span class="float-icon">🍣</span>
+            </div>
+            
+            <h1 class="letter-title">Para mi hermosa Flor</h1>
+            
+            <!-- Contenedor dinámico de páginas -->
+            <div class="letter-content-box" id="letterContentBox">
+              
+              <!-- Página 1 -->
+              <div class="page active" id="page0">
+                <p class="letter-paragraph">
+                  Flor, mi amor... desde que llegaste a mi vida, todo cobró un color y un sentido completamente diferente. Cada día a tu lado me confirma que no existe mejor lugar en el mundo que allá donde estés vos. Me encanta la forma en que transformamos los momentos más simples en recuerdos inolvidables, desde compartir una noche entre risas comiendo sushi hasta las charlas más profundas a la noche.
+                </p>
+                <button class="btn-next" onclick="siguientePagina(event)">Siguiente ✨</button>
+              </div>
+
+              <!-- Página 2 -->
+              <div class="page" id="page1">
+                <p class="letter-paragraph">
+                  Amo la complicidad tan linda que construimos, la libertad de mostrarnos tal cual somos, la confianza ciega y esa forma única en la que elegimos estar juntos. Con vos aprendí que el amor de verdad no presiona ni exige, sino que abraza, impulsa y te da las ganas de querer ser una mejor versión de uno mismo cada mañana.
+                </p>
+                <button class="btn-next" onclick="siguientePagina(event)">Siguiente ✨</button>
+              </div>
+
+              <!-- Página 3 -->
+              <div class="page" id="page2">
+                <p class="letter-paragraph">
+                  Quiero seguir creciendo a tu lado, acompañarte en cada uno de tus sueños, ser tu refugio constante en los días difíciles y tu compañero de festejos en cada logro. Sos mi persona favorita, mi tranquilidad y mi alegría más grande.
+                </p>
+                <button class="btn-next" onclick="siguientePagina(event)">Siguiente ✨</button>
+              </div>
+
+              <!-- Página 4 (El Clímax) -->
+              <div class="page" id="page3">
+                <p class="letter-paragraph">
+                  Por todo lo que ya vivimos, por el amor tan sincero que nos tenemos y por todo lo hermoso que nos queda por construir juntos...
+                </p>
+                <div class="giant-question">
+                  ¿Querés ser mi novia? 🌸
+                </div>
+                <div class="buttons">
+                  <button class="btn btn-yes" onclick="responder('si', event)">
+                    <span class="btn-text">¡SÍ! 💖</span>
+                  </button>
+                  <button class="btn btn-no" onclick="responder('no', event)">No 🙈</button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="tap-hint" id="tapHint">✨ Desliza el dedo y toca el sello ✨</p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // 1. Preloader
+      setTimeout(() => {
+        const preloader = document.getElementById('preloader');
+        preloader.style.opacity = '0';
+        setTimeout(() => { preloader.style.visibility = 'hidden'; }, 800);
+      }, 2000);
+
+      // 2. Efecto Parallax 3D Táctil
+      const stage = document.getElementById('stage');
+      const ambientGlow = document.getElementById('ambientGlow');
+      const wrapper = document.getElementById('envelopeWrapper');
+      let isOpened = false;
+
+      document.addEventListener('touchmove', (e) => {
+        if (isOpened) return;
+        const touch = e.touches[0];
+        const x = touch.clientX; const y = touch.clientY;
+        
+        ambientGlow.style.transform = `translate(calc(-50% + ${(x - window.innerWidth / 2) * 0.1}px), calc(-50% + ${(y - window.innerHeight / 2) * 0.1}px))`;
+        const xAxis = (window.innerWidth / 2 - x) / 20;
+        const yAxis = (window.innerHeight / 2 - y) / 20;
+        stage.style.transform = `rotateY(${xAxis}deg) rotateX(${-yAxis}deg)`;
+      }, { passive: true });
+
+      document.addEventListener('touchend', () => {
+        if (!isOpened) {
+          stage.style.transform = `rotateY(0deg) rotateX(0deg)`;
+          stage.style.transition = 'transform 0.4s ease';
+        }
+      });
+
+      // 3. Abrir la Carta
+      const tapHint = document.getElementById('tapHint');
+      wrapper.addEventListener('click', (e) => {
+        if (!isOpened) {
+          isOpened = true;
+          wrapper.classList.add('open');
+          tapHint.style.opacity = '0';
+          stage.style.transform = `rotateY(0deg) rotateX(0deg)`;
+          
+          const x = e.clientX || (e.touches && e.touches[0].clientX) || window.innerWidth/2;
+          const y = e.clientY || (e.touches && e.touches[0].clientY) || window.innerHeight/2;
+          crearParticulas(x, y, 12, ['✨', '🌸']);
+        }
+      });
+
+      // 4. Lluvia de fondo
+      const sushiBg = document.getElementById('sushiBg');
+      const icons = ['🍣', '🍱', '🍙', '💖', '🌸', '✨'];
+
+      for (let i = 0; i < 30; i++) {
+        const item = document.createElement('div');
+        item.classList.add('floating-item');
+        item.innerText = icons[Math.floor(Math.random() * icons.length)];
+        const scale = Math.random() * 0.6 + 0.6;
+        const blur = Math.random() > 0.7 ? `blur(2px)` : 'none';
+        
+        item.style.left = `${Math.random() * 100}%`;
+        item.style.transform = `scale(${scale})`;
+        item.style.filter = `drop-shadow(0 3px 6px rgba(0,0,0,0.2)) ${blur}`;
+        item.style.animationDuration = `${Math.random() * 8 + 6}s`;
+        item.style.animationDelay = `${Math.random() * -10}s`; 
+        sushiBg.appendChild(item);
+      }
+    });
+
+    // --- Lógica de Paginación ---
+    let paginaActual = 0;
+    const totalPaginas = 4;
+
+    function siguientePagina(event) {
+      event.stopPropagation(); 
+      if (paginaActual < totalPaginas - 1) {
+        document.getElementById(`page${paginaActual}`).classList.remove('active');
+        paginaActual++;
+        document.getElementById(`page${paginaActual}`).classList.add('active');
+      }
+    }
+
+    // --- Motor de Partículas ---
+    function crearParticulas(x, y, cantidad, emojis) {
+      for (let i = 0; i < cantidad; i++) {
+        const burst = document.createElement('div');
+        burst.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        burst.style.position = 'fixed'; burst.style.left = `${x}px`; burst.style.top = `${y}px`;
+        burst.style.fontSize = `${Math.random() * 1.5 + 1.2}rem`;
+        burst.style.pointerEvents = 'none'; burst.style.zIndex = '1000';
+        burst.style.transition = 'all 0.8s cubic-bezier(0.1, 0.8, 0.3, 1)';
+        document.body.appendChild(burst);
+
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * 150 + 80;
+        const tx = Math.cos(angle) * velocity; const ty = Math.sin(angle) * velocity;
+
+        setTimeout(() => {
+          burst.style.transform = `translate(${tx}px, ${ty}px) scale(${Math.random() * 1.2 + 0.5}) rotate(${Math.random() * 360}deg)`;
+          burst.style.opacity = '0';
+        }, 10);
+        setTimeout(() => burst.remove(), 850);
+      }
+    }
+
+    // --- Respuesta Final y Clímax ---
+    function responder(opcion, event) {
+      event.stopPropagation();
+      
+      if (opcion === 'si') {
+        crearParticulas(window.innerWidth / 2, window.innerHeight / 2, 60, ['🍣', '💖', '✨', '🌸', '🎉']);
+        document.getElementById('mainContainer').classList.add('climax-active');
+        
+        const letter = document.querySelector('.letter');
+        letter.style.transform = "translateX(-50%) translateY(-170px) scale(1) rotate(1deg)";
+        setTimeout(() => { letter.style.transform = "translateX(-50%) translateY(-170px) scale(1) rotate(-1deg)"; }, 100);
+        setTimeout(() => { letter.style.transform = "translateX(-50%) translateY(-170px) scale(1) rotate(0deg)"; }, 200);
+
+        setTimeout(() => {
+          document.getElementById('page3').innerHTML = `
+            <h2 style="font-family: 'Dancing Script', cursive; color: #b71c1c; font-size: 2.2rem; margin-top:10px; text-align:center;">
+              ¡Sabía que dirías que sí! 💖
+            </h2>
+            <p style="text-align:center; margin-top: 15px; color:#333; font-size: 0.95rem;">Sos lo mejor de mi vida, Flor.<br>Preparemos el sushi para festejar 🍣</p>
+          `;
+        }, 400);
+
+      } else if (opcion === 'no') {
+        alert("Será en otro momento :D 🍣");
+      }
+    }
+  </script>
+</body>
+</html>
