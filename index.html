@@ -142,12 +142,7 @@
       text-align: center; margin-bottom: 12px;
     }
 
-    .giant-question {
-      font-family: 'Playfair Display', serif; font-style: italic; color: #880e4f;
-      font-size: 1.35rem; font-weight: 600; text-align: center; margin: 8px 0 12px 0;
-    }
-
-    /* --- Botones --- */
+    /* --- Botón Siguiente --- */
     .btn-next {
       background: linear-gradient(135deg, #ff4081, #ff79b0); border: none; color: white;
       font-weight: 600; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;
@@ -156,13 +151,6 @@
       margin-top: 2px; transition: transform 0.2s ease;
     }
     .btn-next:active { transform: scale(0.95); }
-
-    .buttons { display: flex; gap: 10px; justify-content: center; margin-top: 2px; width: 100%; }
-
-    .btn { border: none; padding: 10px 20px; border-radius: 25px; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: transform 0.2s ease; }
-    .btn:active { transform: scale(0.9); }
-    .btn-yes { background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); color: white; box-shadow: 0 6px 18px rgba(255, 8, 68, 0.4); }
-    .btn-no { background: #e0e0e0; color: #616161; }
 
     /* --- ESTADOS DE ANIMACIÓN AL ABRIR (Altura ajustada para móvil) --- */
     .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
@@ -235,28 +223,11 @@
                 <button class="btn-next" onclick="siguientePagina(event)">Siguiente ✨</button>
               </div>
 
-              <!-- Página 3 -->
+              <!-- Página 3 (Final) -->
               <div class="page" id="page2">
                 <p class="letter-paragraph">
-                  Quiero seguir creciendo a tu lado, acompañarte en cada uno de tus sueños, ser tu refugio constante en los días difíciles y tu compañero de festejos en cada logro. Sos mi persona favorita, mi tranquilidad y mi alegría más grande.
+                  Quiero seguir creciendo a tu lado, acompañarte en cada uno de tus sueños, ser tu refugio constante en los días difíciles y tu compañero de festejos en cada logro. Sos mi persona favorita, mi tranquilidad y mi alegría más grande. Por todo lo que ya vivimos y por todo lo hermoso que nos queda por construir juntos... te quiero muchísimo. 💖
                 </p>
-                <button class="btn-next" onclick="siguientePagina(event)">Siguiente ✨</button>
-              </div>
-
-              <!-- Página 4 (El Clímax) -->
-              <div class="page" id="page3">
-                <p class="letter-paragraph">
-                  Por todo lo que ya vivimos, por el amor tan sincero que nos tenemos y por todo lo hermoso que nos queda por construir juntos...
-                </p>
-                <div class="giant-question">
-                  ¿Querés ser mi novia? 🌸
-                </div>
-                <div class="buttons">
-                  <button class="btn btn-yes" onclick="responder('si', event)">
-                    <span class="btn-text">¡SÍ! 💖</span>
-                  </button>
-                  <button class="btn btn-no" onclick="responder('no', event)">No 🙈</button>
-                </div>
               </div>
 
             </div>
@@ -338,9 +309,9 @@
       }
     });
 
-    // --- Lógica de Paginación ---
+    // --- Lógica de Paginación (Actualizada a 3 páginas) ---
     let paginaActual = 0;
-    const totalPaginas = 4;
+    const totalPaginas = 3;
 
     function siguientePagina(event) {
       event.stopPropagation(); 
@@ -371,33 +342,6 @@
           burst.style.opacity = '0';
         }, 10);
         setTimeout(() => burst.remove(), 850);
-      }
-    }
-
-    // --- Respuesta Final y Clímax ---
-    function responder(opcion, event) {
-      event.stopPropagation();
-      
-      if (opcion === 'si') {
-        crearParticulas(window.innerWidth / 2, window.innerHeight / 2, 60, ['🍣', '💖', '✨', '🌸', '🎉']);
-        document.getElementById('mainContainer').classList.add('climax-active');
-        
-        const letter = document.querySelector('.letter');
-        letter.style.transform = "translateX(-50%) translateY(-135px) scale(1) rotate(1deg)";
-        setTimeout(() => { letter.style.transform = "translateX(-50%) translateY(-135px) scale(1) rotate(-1deg)"; }, 100);
-        setTimeout(() => { letter.style.transform = "translateX(-50%) translateY(-135px) scale(1) rotate(0deg)"; }, 200);
-
-        setTimeout(() => {
-          document.getElementById('page3').innerHTML = `
-            <h2 style="font-family: 'Dancing Script', cursive; color: #b71c1c; font-size: 2rem; margin-top:8px; text-align:center;">
-              ¡Sabía que dirías que sí! 💖
-            </h2>
-            <p style="text-align:center; margin-top: 10px; color:#333; font-size: 0.85rem;">Orgulloso de ti, Flor.<br>Te quiero mucho 🍣</p>
-          `;
-        }, 400);
-
-      } else if (opcion === 'no') {
-        alert("Será en otro momento :D 🍣");
       }
     }
   </script>
