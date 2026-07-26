@@ -39,13 +39,6 @@
       transition: background 2.5s ease-in-out; 
     }
 
-    .landing-container.climax-active {
-      background: radial-gradient(circle at 50% 50%, #ffc3a0 0%, #ffafbd 50%, #ff9a9e 100%);
-    }
-    .landing-container.climax-active .ambient-glow {
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 60%);
-    }
-
     .ambient-glow {
       position: absolute; width: 80vw; height: 80vw;
       background: radial-gradient(circle, rgba(255, 42, 109, 0.15) 0%, transparent 60%);
@@ -53,7 +46,7 @@
       pointer-events: none; transition: background 2.5s ease;
     }
 
-    .sushi-bg { position: absolute; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+    .hearts-bg { position: absolute; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
     .floating-item { position: absolute; bottom: -80px; font-size: 2.2rem; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3)); animation: floatUpAndSway linear infinite; }
     @keyframes floatUpAndSway { 0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; } 10%, 90% { opacity: 0.8; } 100% { transform: translateY(-110dvh) translateX(30px) rotate(360deg); opacity: 0; } }
 
@@ -152,7 +145,7 @@
     }
     .btn-next:active { transform: scale(0.95); }
 
-    /* --- ESTADOS DE ANIMACIÓN AL ABRIR (Altura ajustada para móvil) --- */
+    /* --- ESTADOS DE ANIMACIÓN AL ABRIR --- */
     .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
     .envelope-wrapper.open .letter { 
       transform: translateX(-50%) translateY(-135px) scale(1); 
@@ -179,7 +172,7 @@
 
   <div class="landing-container" id="mainContainer">
     <!-- Fondo dinámico -->
-    <div class="sushi-bg" id="sushiBg"></div>
+    <div class="hearts-bg" id="heartsBg"></div>
     <div class="ambient-glow" id="ambientGlow"></div>
 
     <!-- Escenario 3D interactivo -->
@@ -197,9 +190,9 @@
           
           <div class="letter">
             <div class="letter-header">
-              <span class="float-icon">🍣</span>
+              <span class="float-icon">✨</span>
               <span class="float-icon heart">💖</span>
-              <span class="float-icon">🍣</span>
+              <span class="float-icon">🌸</span>
             </div>
             
             <h1 class="letter-title">Para mi hermosa Flor</h1>
@@ -210,7 +203,7 @@
               <!-- Página 1 -->
               <div class="page active" id="page0">
                 <p class="letter-paragraph">
-                  Flor, mi amor... desde que llegaste a mi vida, todo cobró un color y un sentido completamente diferente. Cada día a tu lado me confirma que no existe mejor lugar en el mundo que allá donde estés vos. Me encanta la forma en que transformamos los momentos más simples en recuerdos inolvidables, desde compartir una noche entre risas comiendo sushi hasta las charlas más profundas a la noche.
+                  Flor, mi amor... desde que llegaste a mi vida, todo cobró un color y un sentido completamente diferente. Cada día a tu lado me confirma que no existe mejor lugar en el mundo que allá donde estés vos. Me encanta la forma en que transformamos cada instante compartido en un recuerdo inolvidable, llenando nuestros días de risas y de charlas profundas que se quedan guardadas en el alma.
                 </p>
                 <button class="btn-next" onclick="siguientePagina(event)">Siguiente ✨</button>
               </div>
@@ -285,13 +278,13 @@
           
           const x = e.clientX || (e.touches && e.touches[0].clientX) || window.innerWidth/2;
           const y = e.clientY || (e.touches && e.touches[0].clientY) || window.innerHeight/2;
-          crearParticulas(x, y, 12, ['✨', '🌸']);
+          crearParticulas(x, y, 12, ['✨', '🌸', '💖']);
         }
       });
 
-      // 4. Lluvia de fondo
-      const sushiBg = document.getElementById('sushiBg');
-      const icons = ['🍣', '🍱', '🍙', '💖', '🌸', '✨'];
+      // 4. Lluvia de fondo con temática romántica
+      const heartsBg = document.getElementById('heartsBg');
+      const icons = ['💖', '🌸', '✨', '🤍', '💫'];
 
       for (let i = 0; i < 30; i++) {
         const item = document.createElement('div');
@@ -305,11 +298,11 @@
         item.style.filter = `drop-shadow(0 3px 6px rgba(0,0,0,0.2)) ${blur}`;
         item.style.animationDuration = `${Math.random() * 8 + 6}s`;
         item.style.animationDelay = `${Math.random() * -10}s`; 
-        sushiBg.appendChild(item);
+        heartsBg.appendChild(item);
       }
     });
 
-    // --- Lógica de Paginación (Actualizada a 3 páginas) ---
+    // --- Lógica de Paginación ---
     let paginaActual = 0;
     const totalPaginas = 3;
 
